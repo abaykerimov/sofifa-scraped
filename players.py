@@ -23,18 +23,18 @@ def find_all_players(soup):
         positions = item.findAll('a')[2].find('span').text
         skills = item.find('div', {'class': 'col-digit col-oa'}).find('span').text
         ages = item.find('div', {'class': 'col-digit col-ae'}).text.strip()
-        team = item.findAll('div', {'class': 'col-name text-clip rtl'})[1].find('a').text
+        # team = item.findAll('div', {'class': 'col-name text-clip rtl'})[1].find('a').text
 
         team_id = item.findAll('div', {'class': 'col-name text-clip rtl'})[1].find('a').get('href').replace('/team/', '')
         # print team_id
 
         player = {
-            'id': int(id),
+            'id': id,
             'title': titles,
             'position': positions,
-            'age': int(ages),
-            'skill': int(skills),
-            'team_id': int(team_id)
+            'age': ages,
+            'skill': skills,
+            'team_id': team_id
         }
 
         data.append(player)
