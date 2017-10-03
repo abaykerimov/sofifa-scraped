@@ -29,8 +29,8 @@ def find_all_teams(soup):
     items = tbody.find_all('tr')
     for item in items:
         team_id = item.findAll('a')[0].get('href').replace('/team/', '')
-        titles = item.findAll('a')[0].text
-        # print titles
+        titles = item.findAll('a')[0].text.replace("'","")
+        print titles
 
         team = {
             'id': team_id,
@@ -41,6 +41,20 @@ def find_all_teams(soup):
 
         with open('teams.json', 'w') as outfile:
             json.dump(data, outfile)
+
+
+offset = 0
+# url = 'https://sofifa.com/teams/club?v=18&e=158855&set=true&offset=' + str(offset)
+# # print url
+# soup = soup_maker(url)
+# find_all_teams(soup)
+
+for i in xrange(0, 600, 80):
+    url = 'https://sofifa.com/teams/club?v=18&e=158855&set=true&offset=' + str(offset)
+    print url
+    offset = i + 80
+    soup = soup_maker(url)
+    find_all_teams(soup)
 
 # def player_all_details(url):
 #     all_details = {}
@@ -120,16 +134,3 @@ def find_all_teams(soup):
 #         player_data['specialities'] = [li.text.replace('\xa0', '') for li in
 #             specialities.parent.next_sibling.next_sibling.find_all('li')]
 #     return(player_data)
-
-offset = 0
-# url = 'https://sofifa.com/teams/club?v=18&e=158855&set=true&offset=' + str(offset)
-# # print url
-# soup = soup_maker(url)
-# find_all_teams(soup)
-
-for i in xrange(0, 600, 80):
-    url = 'https://sofifa.com/teams/club?v=18&e=158855&set=true&offset=' + str(offset)
-    print url
-    offset = i + 80
-    soup = soup_maker(url)
-    find_all_teams(soup)
